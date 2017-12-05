@@ -15,7 +15,7 @@ using LayerDicts
 
 dict1 = Dict{Symbol, Int}(:foo => 1, :bar => 1)
 dict2 = Dict{Symbol, Int}()
-dict3 = Dict{Symbol, Int}(:bar => 3, :baz => 3)
+dict3 = Dict{Symbol, Int}(           :bar => 3, :baz => 3)
 
 ld = LayerDict([dict1, dict2, dict3])
 @assert ld[:foo] == 1
