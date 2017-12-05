@@ -27,6 +27,8 @@ function LayerDict(dicts::Tuple{Vararg{Associative}})
     return LayerDict{K, V}(collect(dicts))
 end
 
+LayerDict(::Tuple{}) = LayerDict{Any, Any}(Associative[])
+
 LayerDict(dicts::Associative...) = LayerDict(dicts)
 
 function _kv_types(dicts)
