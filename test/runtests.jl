@@ -19,6 +19,16 @@ using Base.Test
     @test LayerDict(Dict{Int, Int}(), Dict{Float64, Int}()) isa LayerDict{Real, Int}
     @test LayerDict((Dict{Int, Int}(), Dict{Float64, Int}())) isa LayerDict{Real, Int}
     @test LayerDict([Dict{Int, Int}(), Dict{Float64, Int}()]) isa LayerDict{Real, Int}
+
+    # Promoting to Any
+    @test LayerDict(Dict{Any, Int}(), Dict{Float64, Any}(), Dict{Float64, Int}()) isa LayerDict{Any, Any}
+    @test LayerDict((Dict{Any, Int}(), Dict{Float64, Any}(), Dict{Float64, Int}())) isa LayerDict{Any, Any}
+    @test LayerDict([Dict{Any, Int}(), Dict{Float64, Any}(), Dict{Float64, Int}()]) isa LayerDict{Any, Any}
+
+    # No dicts
+    @test LayerDict() isa LayerDict{Any, Any}
+    @test LayerDict(()) isa LayerDict{Any, Any}
+    @test LayerDict(Associative[]) isa LayerDict{Any, Any}
 end
 
 dict1 = Dict{Symbol, Int}(:foo => 1, :bar => 1)
