@@ -1,5 +1,6 @@
 using LayerDicts
-using Base.Test
+using Compat
+using Compat.Test
 
 # Write your own tests here.
 @testset "LayerDicts" begin
@@ -28,7 +29,7 @@ using Base.Test
     # No dicts
     @test LayerDict() isa LayerDict{Any, Any}
     @test LayerDict(()) isa LayerDict{Any, Any}
-    @test LayerDict(Associative[]) isa LayerDict{Any, Any}
+    @test LayerDict(AbstractDict[]) isa LayerDict{Any, Any}
 end
 
 dict1 = Dict{Symbol, Int}(:foo => 1, :bar => 1)

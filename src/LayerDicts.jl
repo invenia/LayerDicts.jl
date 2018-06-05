@@ -1,35 +1,37 @@
 __precompile__()
 module LayerDicts
 
+using Compat
+
 export LayerDict
 
-struct LayerDict{K, V} <: Associative{K, V}
-    dicts::Vector{<:Associative}
+struct LayerDict{K, V} <: AbstractDict{K, V}
+    dicts::Vector{<:AbstractDict}
 end
 
-function LayerDict(dicts::Tuple{Vararg{Associative{K, V}}}) where {K, V}
+function LayerDict(dicts::Tuple{Vararg{AbstractDict{K, V}}}) where {K, V}
     return LayerDict{K, V}(collect(dicts))
 end
 
-function LayerDict(dicts::AbstractVector{<:Associative{K, V}}) where {K, V}
+function LayerDict(dicts::AbstractVector{<:AbstractDict{K, V}}) where {K, V}
     return LayerDict{K, V}(dicts)
 end
 
-function LayerDict(dicts::AbstractVector{<:Associative})
+function LayerDict(dicts::AbstractVector{<:AbstractDict})
     K, V = _kv_types(dicts)
 
     return LayerDict{K, V}(dicts)
 end
 
-function LayerDict(dicts::Tuple{Vararg{Associative}})
+function LayerDict(dicts::Tuple{Vararg{AbstractDict}})
     K, V = _kv_types(dicts)
 
     return LayerDict{K, V}(collect(dicts))
 end
 
-LayerDict(::Tuple{}) = LayerDict{Any, Any}(Associative[])
+LayerDict(::Tuple{}) = LayerDict{Any, Any}(AbstractDict[])
 
-LayerDict(dicts::Associative...) = LayerDict(dicts)
+LayerDict(dicts::AbstractDict...) = LayerDict(dicts)
 
 function _kv_types(dicts)
     if isempty(dicts)
