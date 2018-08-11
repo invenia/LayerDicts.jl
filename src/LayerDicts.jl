@@ -76,7 +76,7 @@ if VERSION >= v"0.7.0-DEV.5125"
         iter = iterate(ld_keys, i...)
         iter === nothing && return nothing
         key, next_key_state = iter
-        (key => ld[key], (ld_keys, next_key_state))
+        (key => ld[key], (ld_keys, (next_key_state,)))
     end
 else
     function Base.start(ld::LayerDict)
