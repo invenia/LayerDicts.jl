@@ -21,5 +21,4 @@ after_success:
       VERSION >= v"0.7.0-DEV.3656" && using Pkg
       VERSION >= v"0.7.0-DEV.5183" || cd(Pkg.dir("LayerDicts"))
       Pkg.add("Coverage"); using Coverage
-      Codecov.submit(process_folder())
-      Coveralls.submit(Coveralls.process_folder())'
+      Codecov.submit(process_folder())'
