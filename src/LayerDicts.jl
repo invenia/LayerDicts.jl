@@ -66,20 +66,37 @@ end
 
 Base.length(ld::LayerDict) = length(keys(ld))
 
-function Base.start(ld::LayerDict)
-    ld_keys = keys(ld)
-    return (ld_keys, start(ld_keys))
-end
+if VERSION < v"0.7.0-DEV.5126"
+    function Base.start(ld::LayerDict)
+        ld_keys = keys(ld)
+        return (ld_keys, start(ld_keys))
+    end
 
-function Base.done(ld::LayerDict, state)
-    ld_keys, key_state = state
-    return done(ld_keys, key_state)
-end
+    function Base.done(ld::LayerDict, state)
+        ld_keys, key_state = state
+        return done(ld_keys, key_state)
+    end
 
-function Base.next(ld::LayerDict, state)
-    ld_keys, key_state = state
-    key, new_key_state = next(ld_keys, key_state)
-    return (key => ld[key]), (ld_keys, new_key_state)
+    function Base.next(ld::LayerDict, state)
+        ld_keys, key_state = state
+        key, new_key_state = next(ld_keys, key_state)
+        return (key => ld[key]), (ld_keys, new_key_state)
+    end
+else
+    function Base.iterate(ld::LayerDict, state=(keys(ld),))
+        ld_keys = first(state)
+        key_state = Base.tail(state)
+
+        iter = iterate(ld_keys, key_state...)
+
+        if iter === nothing
+            return nothing
+        end
+
+        key, new_key_state = iter
+
+        return (key => ld[key]), (ld_keys, new_key_state)
+    end
 end
 
 function Base.getindex(ld::LayerDict{K, V}, key) where {K, V}
