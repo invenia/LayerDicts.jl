@@ -1,8 +1,6 @@
 __precompile__()
 module LayerDicts
 
-using Compat
-
 export LayerDict
 
 struct LayerDict{K, V} <: AbstractDict{K, V}
