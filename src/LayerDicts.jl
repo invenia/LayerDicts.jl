@@ -67,11 +67,11 @@ function Base.iterate(ld::LayerDict, state=(keys(ld),))
     ld_keys = first(state)
     key_state = Base.tail(state)
 
+    @assert length(key_state) == 0 || length(key_state) == 1
+
     iter = iterate(ld_keys, key_state...)
 
-    if iter === nothing
-        return nothing
-    end
+    iter === nothing && return nothing
 
     key, new_key_state = iter
 
