@@ -1,7 +1,4 @@
-__precompile__()
 module LayerDicts
-
-using Compat
 
 export LayerDict
 
@@ -66,37 +63,19 @@ end
 
 Base.length(ld::LayerDict) = length(keys(ld))
 
-if VERSION < v"0.7.0-DEV.5126"
-    function Base.start(ld::LayerDict)
-        ld_keys = keys(ld)
-        return (ld_keys, start(ld_keys))
-    end
+function Base.iterate(ld::LayerDict, state=(keys(ld),))
+    ld_keys = first(state)
+    key_state = Base.tail(state)
 
-    function Base.done(ld::LayerDict, state)
-        ld_keys, key_state = state
-        return done(ld_keys, key_state)
-    end
+    @assert length(key_state) == 0 || length(key_state) == 1
 
-    function Base.next(ld::LayerDict, state)
-        ld_keys, key_state = state
-        key, new_key_state = next(ld_keys, key_state)
-        return (key => ld[key]), (ld_keys, new_key_state)
-    end
-else
-    function Base.iterate(ld::LayerDict, state=(keys(ld),))
-        ld_keys = first(state)
-        key_state = Base.tail(state)
+    iter = iterate(ld_keys, key_state...)
 
-        iter = iterate(ld_keys, key_state...)
+    iter === nothing && return nothing
 
-        if iter === nothing
-            return nothing
-        end
+    key, new_key_state = iter
 
-        key, new_key_state = iter
-
-        return (key => ld[key]), (ld_keys, new_key_state)
-    end
+    return (key => ld[key]), (ld_keys, new_key_state)
 end
 
 function Base.getindex(ld::LayerDict{K, V}, key) where {K, V}

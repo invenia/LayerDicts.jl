@@ -1,6 +1,5 @@
 using LayerDicts
-using Compat
-using Compat.Test
+using Test
 
 # Write your own tests here.
 @testset "LayerDicts" begin
