@@ -1,6 +1,6 @@
 # LayerDicts
 
-[![Build Status](https://travis-ci.org/invenia/LayerDicts.jl.svg?branch=master)](https://travis-ci.org/invenia/LayerDicts.jl)
+[![CI](https://github.com/Invenia/LayerDicts.jl/workflows/CI/badge.svg)](https://github.com/Invenia/LayerDicts.jl/actions?query=workflow%3ACI)
 [![CodeCov](https://codecov.io/gh/invenia/LayerDicts.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/invenia/LayerDicts.jl)
 
 `LayerDict` is an `Associative` type that wraps a series of other associatives (e.g. `Dict`s).
